@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Validation with Bootstrap and jQuery</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .error-message {
+      color: #dc3545;
+      font-size: 80%;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .form-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 5px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h2>Registration Form</h2>
+      <form id="validationForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Full Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+          <div class="error-message" id="nameError">Please enter your name</div>
+        </div>
+        
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        </div>
+        
+        <div class="mb-3">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number">
+        </div>
+        
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" rows="3" placeholder="Enter your message"></textarea>
+        </div>
+        
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+      
+      <div class="alert alert-success mt-3" id="successMessage" style="display: none;">
+        Form submitted successfully!
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery and Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      // Form submission event handler
+      $("#validationForm").on("submit", function(event) {
+        event.preventDefault();
+        
+        // Get the name input value
+        const nameInput = $("#name").val().trim();
+        
+        // Validate name field
+        if (nameInput === "") {
+          // Show error message
+          $("#nameError").show();
+          // Add invalid class to input
+          $("#name").addClass("is-invalid");
+          return false;
+        } else {
+          // Hide error message
+          $("#nameError").hide();
+          // Add valid class to input
+          $("#name").removeClass("is-invalid").addClass("is-valid");
+          
+          // Show success message
+          $("#successMessage").show();
+          
+          // You can submit the form to server here if needed
+          // this.submit();
+        }
+      });
+      
+      // Clear validation on input change
+      $("#name").on("input", function() {
+        if ($(this).val().trim() !== "") {
+          $(this).removeClass("is-invalid").addClass("is-valid");
+          $("#nameError").hide();
+        } else {
+          $(this).removeClass("is-valid").addClass("is-invalid");
+          $("#nameError").show();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
